@@ -398,6 +398,51 @@
     .confetti-piece{position:absolute;top:-20px;animation:confettiFall linear forwards}
     @keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
 
+    /* ════════════════════════════════════════
+       SOCIAL PROOF TOASTS
+    ════════════════════════════════════════ */
+    .sp-container{
+      position:fixed;bottom:24px;left:20px;
+      z-index:500;display:flex;flex-direction:column;
+      gap:10px;pointer-events:none;
+    }
+    .sp-toast{
+      display:flex;align-items:center;gap:12px;
+      background:rgba(255,255,255,0.97);
+      border:1px solid rgba(229,231,235,0.9);
+      border-left:3px solid var(--accent);
+      border-radius:12px;
+      padding:12px 16px;
+      box-shadow:0 8px 32px rgba(10,55,118,0.12);
+      min-width:260px;max-width:320px;
+      transform:translateX(-120%);opacity:0;
+      transition:transform .45s cubic-bezier(.34,1.56,.64,1), opacity .4s ease;
+      pointer-events:none;
+    }
+    .sp-toast.sp-in{transform:translateX(0);opacity:1}
+    .sp-toast.sp-out{transform:translateX(-120%);opacity:0;transition:transform .35s ease,opacity .3s ease}
+    .sp-avatar{
+      width:36px;height:36px;border-radius:50%;flex-shrink:0;
+      background:linear-gradient(135deg,var(--primary),var(--accent));
+      display:flex;align-items:center;justify-content:center;
+      font-size:13px;font-weight:700;color:white;
+    }
+    .sp-body{flex:1;min-width:0}
+    .sp-name{font-size:12px;font-weight:700;color:var(--text);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .sp-msg{font-size:11px;color:var(--text-light);line-height:1.4;margin-top:1px}
+    .sp-time{font-size:10px;color:rgba(107,114,128,0.6);margin-top:2px}
+    .sp-check{
+      width:22px;height:22px;border-radius:50%;flex-shrink:0;
+      background:rgba(60,221,221,0.12);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .sp-check svg{width:12px;height:12px;fill:var(--accent)}
+
+    @media(max-width:480px){
+      .sp-container{bottom:16px;left:12px;right:12px}
+      .sp-toast{min-width:0;max-width:100%}
+    }
+
     footer{position:relative;z-index:5;text-align:center;padding:32px 20px;border-top:1px solid var(--border);font-size:12px;color:var(--text-light)}
     @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 
@@ -417,6 +462,16 @@
       .speed-warning-bar{flex-wrap:wrap;gap:8px}
       .geo-ring:nth-child(1){width:80px;height:80px}
       .geo-ring:nth-child(3){width:120px;height:120px}
+      /* ── LOADER RESPONSIVE ── */
+      .loader-ring{width:80px;height:80px;margin-bottom:14px}
+      .ring-pct{font-size:15px}
+      .ring-fill{stroke-dasharray:226}
+      .loader-dots{margin-bottom:10px}
+      .loader-title{font-size:13px}
+      .loader-subtitle{font-size:11px;margin-bottom:12px;padding:0 12px}
+      .loader-countdown{padding:8px 14px;margin-bottom:10px;flex-wrap:wrap;justify-content:center;gap:6px;border-radius:12px}
+      .cd-text{font-size:11px;white-space:normal;text-align:center}
+      .loader-speed-badge{max-width:calc(100vw - 40px);font-size:10px;padding:8px 12px;margin:0 12px}
     }
   </style>
 </head>
@@ -726,6 +781,9 @@
   </main>
 
 </div><!-- /hero-wrap -->
+
+<!-- Social proof toasts container -->
+<div class="sp-container" id="spContainer"></div>
 
 <div class="confetti-container" id="confettiContainer"></div>
 <footer><p>© 2025 AISA System · Tous droits réservés</p></footer>
@@ -1124,6 +1182,7 @@ document.addEventListener('keydown', e=>{
 function unlockCTA(){
   if(videoEnded) return;
   videoEnded=true;
+  stopSocialProof();
   ctaLocked.classList.add('hidden');
   setTimeout(()=>{
     ctaUnlocked.style.display='block';
@@ -1145,6 +1204,98 @@ function launchConfetti(){
     c.appendChild(p);
     setTimeout(()=>p.remove(),(dur+del+.5)*1000);
   }
+}
+
+/* ════════════════════════════════════════════════
+   7. SOCIAL PROOF MICRO-NOTIFICATIONS
+   Déclenchées pendant la lecture, avant le CTA
+════════════════════════════════════════════════ */
+const SP_PEOPLE = [
+  {init:'MK', name:'Mamadou K.',     loc:'Dakar, Sénégal',         msg:'vient de rejoindre la communauté', ago:'À l\u2019instant'},
+  {init:'AF', name:'Awa F.',         loc:'Abidjan, Côte d\u2019Ivoire', msg:'vient de rejoindre la communauté', ago:'il y a 1 min'},
+  {init:'JB', name:'Jean-Baptiste',  loc:'Paris, France',                     msg:'a rejoint la communauté ce matin', ago:'il y a 3 min'},
+  {init:'SK', name:'Seydou K.',      loc:'Bamako, Mali',                      msg:'vient de rejoindre la communauté', ago:'À l\u2019instant'},
+  {init:'CL', name:'Claire L.',      loc:'Lyon, France',                      msg:'a téléchargé le slide', ago:'il y a 2 min'},
+  {init:'IN', name:'Ibrahima N.',    loc:'Douala, Cameroun',                  msg:'vient de rejoindre la communauté', ago:'À l\u2019instant'},
+  {init:'SM', name:'Sophie M.',      loc:'Bruxelles, Belgique',               msg:'regarde la vidéo en ce moment',   ago:'À l\u2019instant'},
+  {init:'OR', name:'Omar R.',        loc:'Casablanca, Maroc',                 msg:'vient de rejoindre la communauté', ago:'il y a 1 min'},
+  {init:'FD', name:'Fatou D.',       loc:'Conakry, Guinée',             msg:'vient de rejoindre la communauté', ago:'il y a 30 sec'},
+  {init:'TD', name:'Thomas D.',      loc:'Montréal, Canada',            msg:'a rejoint la communauté hier',    ago:'il y a 5 min'},
+  {init:'AN', name:'Aïcha N.',  loc:'Lomé, Togo',                  msg:'vient de rejoindre la communauté', ago:'À l\u2019instant'},
+  {init:'RG', name:'Raphaël G.',loc:'Genève, Suisse',              msg:'a téléchargé le slide', ago:'il y a 2 min'},
+  {init:'BB', name:'Brice B.',       loc:'Cotonou, Bénin',              msg:'vient de rejoindre la communauté', ago:'À l\u2019instant'},
+  {init:'ML', name:'Marie-Louise',   loc:'Kinshasa, RDC',                     msg:'regarde la vidéo en ce moment',   ago:'À l\u2019instant'},
+  {init:'YT', name:'Youssef T.',     loc:'Tunis, Tunisie',                    msg:'vient de rejoindre la communauté', ago:'il y a 1 min'},
+]
+
+const GRADIENT_COLORS = [
+  ['#0A3776','#3CDDDD'],['#0A3776','#0ABFCF'],['#1e5fb5','#3CDDDD'],
+  ['#0d4a9e','#3CDDDD'],['#0A3776','#1e8fa0'],['#063060','#3CDDDD'],
+];
+
+let spIndex    = 0;
+let spTimer    = null;
+let spActive   = false;
+const spShuffle = arr => [...arr].sort(()=>Math.random()-.5);
+let spPool = spShuffle(SP_PEOPLE);
+
+function spNext(){
+  if(videoEnded) return; // stop once CTA shows
+  const person = spPool[spIndex % spPool.length];
+  spIndex++;
+  if(spIndex % spPool.length === 0) spPool = spShuffle(SP_PEOPLE); // re-shuffle
+  showSpToast(person);
+  // Next toast in 12–20s
+  const delay = 12000 + Math.random() * 8000;
+  spTimer = setTimeout(spNext, delay);
+}
+
+function showSpToast(p){
+  const container = document.getElementById('spContainer');
+  const colors = GRADIENT_COLORS[Math.floor(Math.random() * GRADIENT_COLORS.length)];
+
+  const toast = document.createElement('div');
+  toast.className = 'sp-toast';
+  toast.innerHTML = `
+    <div class="sp-avatar" style="background:linear-gradient(135deg,${colors[0]},${colors[1]})">${p.init}</div>
+    <div class="sp-body">
+      <div class="sp-name">${p.name} · <span style="font-weight:500;color:var(--text-light)">${p.loc}</span></div>
+      <div class="sp-msg">${p.msg}</div>
+      <div class="sp-time">⏱ ${p.ago}</div>
+    </div>
+    <div class="sp-check"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+  `;
+  container.appendChild(toast);
+
+  // Animate in
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=> toast.classList.add('sp-in'));
+  });
+
+  // Animate out after 4.5s
+  setTimeout(()=>{
+    toast.classList.remove('sp-in');
+    toast.classList.add('sp-out');
+    setTimeout(()=> toast.remove(), 400);
+  }, 4500);
+}
+
+// Démarrer les toasts dès que la vidéo joue
+video.addEventListener('playing', ()=>{
+  if(!spActive){
+    spActive = true;
+    // Premier toast entre 6 et 12s après le début
+    const first = 6000 + Math.random() * 6000;
+    spTimer = setTimeout(spNext, first);
+  }
+}, {once:true});
+
+// Arrêter si la vidéo se termine (CTA visible)
+function stopSocialProof(){
+  clearTimeout(spTimer);
+  // Vider les toasts restants
+  const c = document.getElementById('spContainer');
+  if(c) c.innerHTML = '';
 }
 </script>
 </body>
