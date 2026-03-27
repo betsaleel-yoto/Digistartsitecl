@@ -43,8 +43,8 @@
   --r:10px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;font-size:16px;}
-body{font-family:var(--font-body);background:var(--ink);color:var(--off);line-height:1.7;overflow-x:hidden;width:100%;}
+html{scroll-behavior:smooth;font-size:16px;overflow-x:hidden;max-width:100%;}
+body{font-family:var(--font-body);background:var(--ink);color:var(--off);line-height:1.7;overflow-x:hidden;width:100%;position:relative;}
 img{max-width:100%;display:block;}
 a{text-decoration:none;color:inherit;}
 ul{list-style:none;}
@@ -178,7 +178,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .stat-label{font-size:.8rem;color:var(--muted);margin-top:6px;letter-spacing:.04em;}
 
 /* ── MARQUEE ── */
-.marquee-section{padding:28px 0;border-bottom:1px solid var(--border);overflow:hidden;position:relative;}
+.marquee-section{padding:28px 0;border-bottom:1px solid var(--border);overflow:hidden;position:relative;width:100%;max-width:100%;}
 .marquee-section::before,.marquee-section::after{content:'';position:absolute;top:0;bottom:0;width:100px;z-index:2;}
 .marquee-section::before{left:0;background:linear-gradient(to right,var(--ink),transparent);}
 .marquee-section::after{right:0;background:linear-gradient(to left,var(--ink),transparent);}
@@ -365,7 +365,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 #back-top.show{opacity:1;transform:translateY(0);}
 #back-top:hover{background:var(--white);box-shadow:0 8px 30px rgba(0,212,200,.4);}
 
-/* ── RESPONSIVE IMPROVED ── */
+/* ── RESPONSIVE AMÉLIORÉE ── */
 @media(max-width:1024px){
   .why-grid,.methode-wrap{grid-template-columns:1fr;}
   .methode-sticky{position:static;}
@@ -408,6 +408,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   .pricing-custom{padding:28px 20px;}
   .transparence-band{padding:60px 0;}
   .cta-section{padding:80px 0;}
+  /* Marquee : réduire l'écart pour éviter un overflow trop important */
+  .marquee-track{
+    gap:30px;
+  }
 }
 @media(max-width:480px){
   .portfolio-grid,.team-grid{grid-template-columns:1fr;}
@@ -428,6 +432,26 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   .pricing-feats li{font-size:.75rem;}
   .team-avatar{width:64px;height:64px;}
   .footer-grid{gap:32px;}
+  /* Ajustements supplémentaires pour éviter tout débordement */
+  .container{
+    width:94%;
+  }
+  .hero-pills{
+    gap:8px;
+  }
+  .hero-pill{
+    font-size:.65rem;
+    padding:4px 8px;
+  }
+  .hero-actions{
+    gap:10px;
+  }
+  .btn{
+    white-space:normal;
+  }
+  .marquee-track{
+    gap:20px;
+  }
 }
 </style>
 </head>
