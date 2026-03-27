@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes"/>
 <!-- SEO RDC / INTL géré dynamiquement via JS -->
 <title>Agence Web Kinshasa | Site Internet & App Mobile pour PME - DigistartExpress</title>
 <meta name="description" content="Agence digitale premium spécialisée dans la création de sites web, applications mobiles et SaaS sur-mesure pour les entrepreneurs ambitieux d'Afrique et d'Europe francophone. Devis sous 48h."/>
@@ -44,7 +44,7 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;font-size:16px;}
-body{font-family:var(--font-body);background:var(--ink);color:var(--off);line-height:1.7;overflow-x:hidden;width: 100%;}
+body{font-family:var(--font-body);background:var(--ink);color:var(--off);line-height:1.7;overflow-x:hidden;width:100%;}
 img{max-width:100%;display:block;}
 a{text-decoration:none;color:inherit;}
 ul{list-style:none;}
@@ -365,7 +365,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 #back-top.show{opacity:1;transform:translateY(0);}
 #back-top:hover{background:var(--white);box-shadow:0 8px 30px rgba(0,212,200,.4);}
 
-/* ── RESPONSIVE ── */
+/* ── RESPONSIVE IMPROVED ── */
 @media(max-width:1024px){
   .why-grid,.methode-wrap{grid-template-columns:1fr;}
   .methode-sticky{position:static;}
@@ -393,9 +393,41 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   .transparence-grid{grid-template-columns:1fr;}
   .hero-video-mobile{display:block;}
   .hero-video-desktop{display:none;}
+  /* Réductions de padding pour éviter débordement */
+  .section{padding:70px 0;}
+  .hero-content{padding:100px 0 60px;}
+  .stat-block{padding:24px 16px;}
+  .service-card{padding:28px 20px;}
+  .service-mini{padding:24px 20px;}
+  .step-card{padding:24px 20px;}
+  .temo-card{padding:20px;}
+  .team-card{padding:20px 16px;}
+  .why-item{padding:16px 20px;}
+  .why-chart{padding:24px;}
+  .pricing-card{padding:32px 24px;}
+  .pricing-custom{padding:28px 20px;}
+  .transparence-band{padding:60px 0;}
+  .cta-section{padding:80px 0;}
 }
 @media(max-width:480px){
   .portfolio-grid,.team-grid{grid-template-columns:1fr;}
+  .hero-content{padding:80px 0 50px;}
+  .hero-pill{font-size:.7rem;padding:4px 10px;}
+  .hero-actions .btn{padding:12px 20px;font-size:.75rem;}
+  .hero-actions .btn-lg{padding:12px 24px;}
+  .stat-num{font-size:2rem;}
+  .h2{font-size:clamp(1.8rem,4vw,2.8rem);}
+  .service-card{padding:24px 16px;}
+  .service-card h3{font-size:1rem;}
+  .service-card ul li{font-size:.75rem;}
+  .service-mini{padding:20px;}
+  .portfolio-overlay{padding:16px;}
+  .portfolio-overlay h4{font-size:.9rem;}
+  .pricing-card{padding:28px 20px;}
+  .pricing-price .price-num{font-size:2.8rem;}
+  .pricing-feats li{font-size:.75rem;}
+  .team-avatar{width:64px;height:64px;}
+  .footer-grid{gap:32px;}
 }
 </style>
 </head>
