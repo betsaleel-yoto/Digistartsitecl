@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Maquette gratuite · DigistartExpress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,400;12..96,600;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="shortcut icon" href="https://res.cloudinary.com/dlkow85gp/image/upload/v1768295384/DigistartNewLogo-removebg-preview_spctht.png">
+  <style>
+    :root {
+      --bg-primary: #F9FAFB;
+      --bg-secondary: #FFFFFF;
+      --bg-tertiary: #F1F5F9;
+      --text-primary: #0F172A;
+      --text-secondary: #334155;
+      --text-muted: #64748B;
+      --border-light: #E2E8F0;
+      --border-teal-light: rgba(0, 180, 170, 0.25);
+      --teal: #00B4A8;
+      --teal-dim: rgba(0, 180, 170, 0.08);
+      --white: #FFFFFF;
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --ease: cubic-bezier(.4,0,.2,1);
+      --r: 12px;
+      --shadow-sm: 0 4px 6px -2px rgba(0,0,0,0.05);
+      --shadow-md: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02);
+      --shadow-lg: 0 20px 30px -10px rgba(0,0,0,0.08);
+      --danger: #DC2626;
+      --danger-bg: rgba(220, 38, 38, 0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
+    body { font-family: var(--font-body); background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; position: relative; }
+    ::selection { background: var(--teal); color: white; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-tertiary); }
+    ::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 4px; }
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bg-shape {
+      position: absolute;
+      opacity: 0.06;
+      filter: blur(40px);
+      will-change: transform;
+    }
+    .shape1 {
+      width: 400px;
+      height: 400px;
+      background: var(--teal);
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      top: 10%;
+      left: -5%;
+      animation: float1 28s infinite alternate ease-in-out;
+    }
+    .shape2 {
+      width: 500px;
+      height: 500px;
+      background: #0F766E;
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      bottom: 0%;
+      right: -5%;
+      animation: float2 35s infinite alternate ease-in-out;
+    }
+    .shape3 {
+      width: 300px;
+      height: 300px;
+      background: #2DD4BF;
+      border-radius: 40% 60% 60% 40% / 40% 50% 50% 60%;
+      top: 50%;
+      left: 60%;
+      animation: float3 25s infinite alternate ease-in-out;
+    }
+    .shape4 {
+      width: 200px;
+      height: 200px;
+      border: 2px solid var(--teal);
+      border-radius: 20% 80% 20% 80% / 80% 20% 80% 20%;
+      top: 70%;
+      left: 10%;
+      opacity: 0.04;
+      animation: rotateShape 40s infinite linear;
+    }
+    .shape5 {
+      width: 350px;
+      height: 350px;
+      background: linear-gradient(135deg, var(--teal), #0F766E);
+      border-radius: 50%;
+      top: 20%;
+      right: 15%;
+      opacity: 0.04;
+      filter: blur(50px);
+      animation: pulseShape 12s infinite alternate ease-in-out;
+    }
+    @keyframes float1 {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(80px, 60px) rotate(10deg); }
+    }
+    @keyframes float2 {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(-70px, -80px) rotate(-15deg); }
+    }
+    @keyframes float3 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-40px, 50px) scale(1.1); }
+    }
+    @keyframes rotateShape {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.2); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+    @keyframes pulseShape {
+      0% { opacity: 0.02; transform: scale(1); }
+      100% { opacity: 0.06; transform: scale(1.3); }
+    }
+    .bg-gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 40%, rgba(0,180,170,0.03) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(15,118,110,0.02) 0%, transparent 50%);
+      z-index: -1;
+      pointer-events: none;
+      animation: gradientShift 20s infinite alternate ease-in-out;
+    }
+    @keyframes gradientShift {
+      0% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+    body::after { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.015'/%3E%3C/svg%3E"); pointer-events: none; z-index: -1; opacity: 0.3; }
+    .cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; transform: translate(-50%, -50%); }
+    .cursor-dot { width: 8px; height: 8px; background: var(--teal); border-radius: 50%; transition: width .15s, height .15s; }
+    .cursor-ring { width: 36px; height: 36px; border: 1.5px solid rgba(0, 180, 170, 0.6); border-radius: 50%; transition: width .2s, height .2s, border-color .2s; }
+    body:has(a:hover) .cursor-ring, body:has(button:hover) .cursor-ring { width: 52px; height: 52px; border-color: var(--teal); }
+    #loader { position: fixed; inset: 0; background: var(--bg-primary); z-index: 99997; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; transition: opacity .6s var(--ease), visibility .6s; }
+    #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loader-logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; color: var(--text-primary); letter-spacing: -.02em; }
+    .loader-logo em { color: var(--teal); font-style: normal; }
+    .loader-bar { width: 180px; height: 2px; background: var(--border-light); position: relative; overflow: hidden; }
+    .loader-bar::after { content: ''; position: absolute; inset: 0; background: var(--teal); transform: translateX(-100%); animation: loaderBar 1.8s var(--ease) forwards; }
+    @keyframes loaderBar { 0% { transform: translateX(-100%); } 60% { transform: translateX(-20%); } 100% { transform: translateX(0); } }
+    .container { width: 92%; max-width: 1140px; margin: 0 auto; position: relative; z-index: 2; }
+    .tag { display: inline-flex; align-items: center; gap: 6px; font-size: 0.7rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--teal); background: var(--teal-dim); border: 1px solid var(--border-teal-light); padding: 5px 14px; border-radius: 999px; }
+    .h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; line-height: 1.1; letter-spacing: -.02em; color: var(--text-primary); }
+    .h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); }
+    .lead { font-size: 1rem; color: var(--text-secondary); line-height: 1.7; font-weight: 400; }
+    .teal { color: var(--teal); }
+    .btn { display: inline-flex; align-items: center; gap: 9px; padding: 14px 28px; border-radius: 8px; font-family: var(--font-display); font-weight: 700; font-size: .85rem; letter-spacing: .01em; cursor: pointer; border: 1.5px solid transparent; transition: all .35s var(--ease); white-space: nowrap; position: relative; overflow: hidden; background: transparent; }
+    .btn-teal { background: var(--teal); color: white; border-color: var(--teal); box-shadow: var(--shadow-sm); }
+    .btn-teal:hover { background: transparent; color: var(--teal); transform: translateY(-2px); box-shadow: 0 0 25px rgba(0, 180, 170, 0.3); }
+    .btn-outline { background: transparent; color: var(--text-primary); border-color: var(--border-light); }
+    .btn-outline:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); background: var(--teal-dim); }
+    .btn-lg { padding: 17px 36px; font-size: .95rem; }
+    @keyframes gentlePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0, 180, 170, 0); transform: scale(1); }
+      50% { box-shadow: 0 0 20px 5px rgba(0, 180, 170, 0.25); transform: scale(1.02); }
+    }
+    .btn-attention { animation: gentlePulse 3s infinite ease-in-out; }
+    .btn-attention:hover { animation: none; transform: translateY(-2px); box-shadow: 0 0 25px rgba(0, 180, 170, 0.3); }
+    #header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-light); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; color: var(--text-primary); letter-spacing: -.01em; text-decoration: none; }
+    .nav-logo img { height: 38px; }
+    .nav-logo em { color: var(--teal); font-style: normal; }
+    .nav-links { display: flex; align-items: center; gap: 2px; }
+    .nav-links a { font-size: .82rem; font-weight: 500; color: var(--text-secondary); padding: 8px 16px; border-radius: 6px; transition: all .2s; text-decoration: none; }
+    .nav-links a:hover { color: var(--teal); background: var(--teal-dim); }
+    .nav-links a.active { color: var(--teal); font-weight: 600; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .intro-section { padding: 140px 0 20px; }
+    .intro-grid { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; }
+    .intro-content { flex: 1.2; }
+    .intro-image { flex: 1; text-align: center; }
+    .intro-image img { max-width: 100%; border-radius: 24px; border: 1px solid var(--border-light); box-shadow: var(--shadow-lg); }
+    .pain-point { font-size: 1.2rem; margin: 20px 0 16px; color: var(--text-secondary); font-weight: 400; }
+    .time-badge { background: var(--teal-dim); border: 1px solid var(--teal); border-radius: 60px; padding: 8px 18px; display: inline-block; font-size: .9rem; font-weight: 600; color: var(--teal); margin-bottom: 25px; }
+    .testimonials-section { padding: 40px 0 20px; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 30px; }
+    .testi-card { background: var(--bg-secondary); border: 1px solid var(--border-light); border-radius: var(--r); padding: 28px; box-shadow: var(--shadow-sm); transition: border-color .3s, transform .3s, box-shadow .3s; }
+    .testi-card:hover { border-color: var(--teal); transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .testi-quote { font-size: .9rem; line-height: 1.7; color: var(--text-primary); margin-bottom: 20px; font-style: italic; position: relative; padding-top: 8px; }
+    .testi-quote::before { content: '“'; font-size: 3rem; color: var(--teal); opacity: .3; position: absolute; top: -10px; left: -6px; font-family: serif; }
+    .testi-author { display: flex; align-items: center; gap: 14px; border-top: 1px solid var(--border-light); padding-top: 18px; }
+    .testi-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #0F766E, var(--teal)); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; }
+    .testi-name { font-weight: 700; font-size: .9rem; color: var(--text-primary); }
+    .testi-role { font-size: .7rem; color: var(--text-muted); }
+    .testi-result { margin-top: 6px; font-size: .7rem; font-weight: 700; color: var(--teal); background: var(--teal-dim); border: 1px solid var(--border-teal-light); padding: 2px 10px; border-radius: 999px; display: inline-block; }
+    .realisations-section { padding: 30px 0 20px; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 24px; }
+    .gallery-item { position: relative; border-radius: var(--r); overflow: hidden; border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); transition: transform .3s, border-color .3s, box-shadow .3s; cursor: default; background: white; }
+    .gallery-item:hover { transform: translateY(-6px); border-color: var(--teal); box-shadow: var(--shadow-md); }
+    .gallery-item img { width: 100%; height: 220px; object-fit: cover; display: block; transition: filter .4s; }
+    .gallery-item:hover img { filter: brightness(.95); }
+    .gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(255,255,255,.95), transparent); padding: 20px 16px 12px; }
+    .gallery-caption h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+    .gallery-caption p { font-size: .7rem; color: var(--text-muted); }
+    .form-card { background: var(--bg-secondary); border: 1px solid var(--border-light); border-radius: var(--r); padding: 48px 44px; box-shadow: var(--shadow-lg); margin: 30px 0 60px; }
+    .form-header { margin-bottom: 40px; text-align: center; }
+    .free-badge { background: var(--teal-dim); border: 1px dashed var(--teal); color: var(--teal); padding: 6px 16px; border-radius: 40px; font-size: .8rem; font-weight: 600; display: inline-block; margin-top: 12px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 32px; }
+    .full-width { grid-column: span 2; }
+    .field-label { display: block; font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+    .field-label i { color: var(--teal); margin-right: 6px; font-size: .7rem; width: 16px; }
+    input, textarea, select { width: 100%; background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: 8px; padding: 14px 16px; font-family: var(--font-body); font-size: .9rem; color: var(--text-primary); outline: none; transition: border-color .25s, box-shadow .25s; }
+    input:focus, textarea:focus, select:focus { border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-dim); background: white; }
+    textarea { resize: vertical; min-height: 100px; }
+    select { appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%2300B4A8" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>'); background-repeat: no-repeat; background-position: right 16px center; background-size: 14px; }
+    .field-hint { font-size: .72rem; color: var(--text-muted); margin-top: 5px; display: flex; align-items: flex-start; gap: 4px; }
+    .field-hint i { color: var(--teal); font-size: .65rem; margin-top: 2px; }
+    .file-upload-wrapper { position: relative; display: flex; align-items: center; gap: 12px; }
+    .file-upload-wrapper input[type="file"] { position: absolute; opacity: 0; width: 0.1px; height: 0.1px; }
+    .file-upload-label { display: inline-flex; align-items: center; gap: 8px; background: var(--bg-tertiary); border: 1px solid var(--border-light); border-radius: 8px; padding: 12px 18px; font-size: .85rem; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: all .2s; }
+    .file-upload-label i { color: var(--teal); font-size: 1rem; }
+    .file-upload-label:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-dim); }
+    .file-name { font-size: .8rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px; }
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 16px 32px; margin-top: 8px; }
+    .checkbox-item { display: flex; align-items: center; gap: 10px; font-size: .85rem; color: var(--text-primary); }
+    .checkbox-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--teal); }
+    .form-actions { margin-top: 40px; display: flex; justify-content: center; }
+    .note-text { text-align: center; margin-top: 20px; font-size: .75rem; color: var(--text-muted); }
+    .success-message, .form-error-box {
+      border-radius: 8px;
+      padding: 18px 24px;
+      margin-bottom: 24px;
+      display: none;
+      align-items: center;
+      gap: 12px;
+    }
+    .success-message {
+      background: var(--teal-dim);
+      border: 1px solid var(--teal);
+      color: var(--text-primary);
+    }
+    .success-message i { color: var(--teal); font-size: 1.4rem; }
+    .form-error-box {
+      background: var(--danger-bg);
+      border: 1px solid rgba(220, 38, 38, 0.25);
+      color: #991B1B;
+    }
+    .form-error-box i { color: var(--danger); font-size: 1.3rem; }
+    .error-text { color: var(--danger); font-size: .75rem; margin-top: 4px; display: none; }
+    #footer { background: var(--bg-secondary); border-top: 1px solid var(--border-light); padding: 48px 0 24px; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: .75rem; color: var(--text-muted); flex-wrap: wrap; gap: 10px; }
+    .footer-bottom a { color: var(--teal); font-weight: 500; text-decoration: none; }
+    #otherIndustryWrapper { margin-top: 16px; display: none; }
+    #back-top.show { opacity: 1; transform: translateY(0); }
+    .field-invalid { border-color: var(--danger) !important; box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.08) !important; background: #FFF5F5; }
+    @media (max-width: 768px) {
+      .nav-links, .nav-right .btn { display: none; }
+      .intro-grid { flex-direction: column; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .form-card { padding: 32px 22px; }
+      .form-grid { grid-template-columns: 1fr; gap: 20px; }
+      .full-width { grid-column: span 1; }
+      .file-name { max-width: 130px; }
+    }
+  </style>
+</head>
+<body>
+<div class="bg-animation">
+  <div class="bg-shape shape1"></div>
+  <div class="bg-shape shape2"></div>
+  <div class="bg-shape shape3"></div>
+  <div class="bg-shape shape4"></div>
+  <div class="bg-shape shape5"></div>
+</div>
+<div class="bg-gradient"></div>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div id="loader">
+  <div class="loader-logo">Digistart<em>Express</em></div>
+  <div class="loader-bar"></div>
+</div>
+
+<header id="header">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="https://res.cloudinary.com/dlkow85gp/image/upload/v1768295384/DigistartNewLogo-removebg-preview_spctht.png" alt="DigistartExpress">
+      Digistart<em>Express</em>
+    </a>
+    <nav class="nav-links">
+      <a href="#">Accueil</a>
+      <a href="#" class="active">Maquette</a>
+      <a href="#">Services</a>
+      <a href="#">Portfolio</a>
+    </nav>
+    <div class="nav-right">
+      <a href="#" class="btn btn-teal">Contact</a>
+    </div>
+  </div>
+</header>
+
+<section class="intro-section">
+  <div class="container">
+    <div class="intro-grid">
+      <div class="intro-content">
+        <div class="tag" style="margin-bottom: 20px;"><i class="fa-regular fa-bolt"></i> Pour les dirigeants ambitieux</div>
+        <h2 class="h2" style="margin-bottom: 20px;">Chaque jour sans une présence digitale claire, <span class="teal">vous laissez vos concurrents prendre vos clients.</span></h2>
+        <p class="pain-point"><i class="fa-regular fa-circle-exclamation" style="color: var(--teal); margin-right: 8px;"></i> Vous savez que votre entreprise mérite mieux qu'un site brouillon ou une page Facebook vide. Mais entre la technique et le temps, vous repoussez.</p>
+        <div class="time-badge"><i class="fa-regular fa-clock"></i> 2 minutes suffisent pour faire le premier pas</div>
+        <p class="lead">Remplissez ce formulaire simple — même sans jargon digital. Vous recevrez une maquette visuelle gratuite de votre futur site, adaptée à votre activité.</p>
+        <div style="margin-top: 30px;">
+          <a href="#formulaire" class="btn btn-teal btn-lg btn-attention">Je veux ma maquette gratuite <i class="fa-regular fa-arrow-down"></i></a>
+        </div>
+      </div>
+      <div class="intro-image">
+        <img src="https://images.pexels.com/photos/3184299/pexels-photo-3184299.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Croissance digitale">
+        <p style="font-size:.7rem; color: var(--text-muted); margin-top: 8px;">De l'idée à la visibilité : votre projet mérite d'exister en ligne.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials-section">
+  <div class="container">
+    <div class="tag" style="margin-bottom: 16px;"><i class="fa-regular fa-star"></i> Ils ont osé le digital</div>
+    <h2 class="h2" style="margin-bottom: 8px;">Des résultats <span class="teal">qui parlent d'eux-mêmes</span></h2>
+    <p class="lead">Découvrez comment nos clients ont transformé leur présence en ligne en levier de croissance.</p>
+    <div class="testimonials-grid">
+      <div class="testi-card"><div class="testi-quote">Grâce au nouveau site vitrine, nous avons signé trois contrats majeurs en moins de deux mois. L'équipe a compris nos enjeux et livré une plateforme qui inspire confiance.</div><div class="testi-author"><div class="testi-avatar">EM</div><div><div class="testi-name">Espérence Mining</div><div class="testi-role">Direction · Lubumbashi</div><div class="testi-result"><i class="fa-regular fa-arrow-trend-up"></i> +3 contrats en 60j</div></div></div></div>
+      <div class="testi-card"><div class="testi-quote">Notre demande de devis a doublé après la refonte. L'approche orientée conversion a fait toute la différence. Je recommande sans hésiter.</div><div class="testi-author"><div class="testi-avatar">SK</div><div><div class="testi-name">Sophie Konaté</div><div class="testi-role">CEO · Abidjan</div><div class="testi-result"><i class="fa-regular fa-arrow-trend-up"></i> +2x demandes</div></div></div></div>
+      <div class="testi-card"><div class="testi-quote">Nous avons réduit notre temps administratif de 20h par semaine grâce au portail client sur mesure. Un vrai partenariat stratégique.</div><div class="testi-author"><div class="testi-avatar">MT</div><div><div class="testi-name">Mwendo Groupe</div><div class="testi-role">Logistique · Kinshasa</div><div class="testi-result"><i class="fa-regular fa-clock"></i> -20h/sem</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="realisations-section">
+  <div class="container">
+    <div class="tag" style="margin-bottom: 16px;"><i class="fa-regular fa-images"></i> Projets récents</div>
+    <h3 class="h3">Quelques-unes de <span class="teal">nos réalisations</span></h3>
+    <p class="lead" style="margin-bottom: 8px;">Un aperçu du niveau de finition que vous obtiendrez.</p>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="https://res.cloudinary.com/dlkow85gp/image/upload/v1768300188/SiteIt_hiqloj.png" alt="IT"><div class="gallery-caption"><h4>IT & Digital</h4><p>Site vitrine haute conversion</p></div></div>
+      <div class="gallery-item"><img src="https://res.cloudinary.com/dlkow85gp/image/upload/v1768300187/SiteMines_a11bs6.png" alt="Mines"><div class="gallery-caption"><h4>Mines & Industrie</h4><p>Portail institutionnel premium</p></div></div>
+      <div class="gallery-item"><img src="https://res.cloudinary.com/dlkow85gp/image/upload/v1768300186/SiteSolaire_v4ritz.png" alt="Solaire"><div class="gallery-caption"><h4>Énergie solaire</h4><p>Simulateur de devis intégré</p></div></div>
+    </div>
+    <p class="field-hint" style="margin-top: 16px; justify-content: center;"><i class="fa-regular fa-eye"></i> Votre maquette sera 100% personnalisée.</p>
+  </div>
+</section>
+
+<section id="formulaire">
+  <div class="container">
+    <div class="form-card">
+      <div class="success-message" id="successMessage"><i class="fa-regular fa-circle-check"></i><div><strong>Demande envoyée !</strong><br>Votre demande a bien été enregistrée. Réponse sous 48h.</div></div>
+      <div class="form-error-box" id="errorMessage"><i class="fa-regular fa-circle-exclamation"></i><div id="errorMessageText">Une erreur est survenue. Merci de réessayer.</div></div>
+      <div class="form-header">
+        <div class="tag"><i class="fa-regular fa-pen-to-square"></i> Formulaire guidé</div>
+        <h2 class="h2">Décrivez votre activité <span class="teal">simplement</span></h2>
+        <p class="lead">Des questions claires, sans termes techniques. Prenez 2 minutes.</p>
+        <div class="free-badge"><i class="fa-regular fa-gem"></i> Maquette 100% gratuite – sans engagement</div>
+      </div>
+      <form id="maquetteForm" method="POST" enctype="multipart/form-data" action="http://localhost:3000/api/maquette" data-api-base="http://localhost:3000">
+        <div class="form-grid">
+          <div><label class="field-label"><i class="fa-regular fa-building"></i> Nom de l'entreprise *</label><input type="text" name="company_name" id="company_name" placeholder="Ex: Boulangerie du Marché" required><div class="field-hint"><i class="fa-regular fa-info-circle"></i> Nom officiel ou connu de vos clients.</div></div>
+          <div><label class="field-label"><i class="fa-regular fa-tag"></i> Secteur (option)</label><select name="industry" id="industrySelect"><option value="" disabled selected>– Choisissez –</option><option>IT & Digital</option><option>Mines</option><option>Transport</option><option>Énergie</option><option>BTP</option><option>Finance</option><option>RH</option><option>Hôtellerie</option><option value="Autre">Autre (préciser)</option></select><div id="otherIndustryWrapper"><input type="text" name="industry_other" id="industryOther" placeholder="Précisez…" style="margin-top:8px;"></div></div>
+          <div class="full-width"><label class="field-label"><i class="fa-regular fa-image"></i> Logo (option)</label><div class="file-upload-wrapper"><input type="file" name="logo" id="logoInput" accept="image/jpeg,image/png,image/webp,image/svg+xml,image/gif"><label for="logoInput" class="file-upload-label"><i class="fa-regular fa-cloud-upload"></i> Choisir</label><span class="file-name" id="logoFileName">Aucun fichier</span></div><div class="field-hint"><i class="fa-regular fa-info-circle"></i> Formats acceptés : JPEG, PNG, WebP, SVG, GIF. Taille max : 5 Mo.</div></div>
+          <div class="full-width"><label class="field-label"><i class="fa-regular fa-message"></i> Que fait votre entreprise ? *</label><textarea name="activity_desc" id="activity_desc" rows="3" placeholder="Ex: Installation de panneaux solaires, cabinet d'avocats…" required></textarea></div>
+        </div>
+        <div style="margin-top:32px;"><label class="field-label"><i class="fa-regular fa-file-lines"></i> Attentes pour votre futur site *</label><textarea name="project_desc" id="project_desc" rows="5" placeholder="Ex: Je veux que les clients voient mes réalisations et me contactent." required></textarea></div>
+        <div style="margin-top:36px;"><label class="field-label"><i class="fa-regular fa-list-check"></i> Services additionnels</label><div class="checkbox-group"><label class="checkbox-item"><input type="checkbox" name="extra_montage"> Montage vidéo</label><label class="checkbox-item"><input type="checkbox" name="extra_design"> Design</label><label class="checkbox-item"><input type="checkbox" name="extra_logo"> Logo</label><label class="checkbox-item"><input type="checkbox" name="extra_content"> Rédaction</label><label class="checkbox-item"><input type="checkbox" name="extra_seo"> SEO</label><label class="checkbox-item"><input type="checkbox" name="extra_marketing"> Marketing</label><label class="checkbox-item"><input type="checkbox" name="extra_other"> Autre</label></div><input type="text" name="other_needs" placeholder="Précisez…" style="margin-top:12px; max-width:400px;"></div>
+        <div class="form-grid" style="margin-top:32px;"><div><label class="field-label"><i class="fa-regular fa-coins"></i> Budget</label><select name="budget"><option value="">– À définir –</option><option>&lt;1 200 €</option><option>1 200–2 500 €</option><option>2 500–6 000 €</option><option>6 000–15 000 €</option><option>&gt;15 000 €</option></select></div><div><label class="field-label"><i class="fa-regular fa-calendar"></i> Délai</label><select name="deadline"><option value="">– Flexible –</option><option>Urgent</option><option>1 mois</option><option>2-3 mois</option><option>&gt;3 mois</option></select></div></div>
+        <div style="margin-top:36px;"><h3 style="font-family:var(--font-display); font-size:1.2rem; margin-bottom:20px;">Coordonnées</h3><div class="form-grid"><div><label class="field-label">Nom complet *</label><input name="contact_name" id="contact_name" required></div><div><label class="field-label">Email *</label><input type="email" name="email" id="email" required><div class="error-text" id="emailError">Email invalide</div></div><div><label class="field-label"><i class="fa-brands fa-whatsapp"></i> WhatsApp</label><input name="whatsapp" id="whatsapp"></div><div><label class="field-label">Téléphone</label><input name="phone"></div><div class="full-width"><label class="field-label">Source</label><select name="source"><option>Google</option><option>LinkedIn</option><option>Recommandation</option><option>Réseaux</option><option>Autre</option></select></div></div></div>
+        <div class="form-actions"><button type="submit" class="btn btn-teal btn-lg btn-attention" id="submitBtn"><i class="fa-regular fa-paper-plane"></i> Recevoir ma maquette gratuite</button></div>
+        <p class="note-text"><i class="fa-regular fa-shield-check"></i> Données privées. Réponse sous 48h.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer id="footer">
+  <div class="container"><div class="footer-bottom"><span>© 2026 DigistartExpress</span><span><a href="mailto:contact@digistartexpress.com">contact@digistartexpress.com</a> · Kinshasa · Paris</span></div></div>
+</footer>
+
+<button id="back-top" style="position:fixed; bottom:28px; right:28px; width:44px; height:44px; background:var(--teal); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; transform:translateY(12px); transition:all .35s; z-index:999; border:none; box-shadow:0 4px 15px rgba(0,180,170,.3);"><i class="fa-solid fa-chevron-up"></i></button>
+
+<script>
+  (function() {
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0;
+    let my = 0;
+    let rx = 0;
+    let ry = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+      dot.style.left = mx + 'px';
+      dot.style.top = my + 'px';
+    });
+
+    (function anim() {
+      rx += (mx - rx) * 0.1;
+      ry += (my - ry) * 0.1;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(anim);
+    })();
+
+    document.querySelectorAll('a,button,input,textarea,select,.checkbox-item,.file-upload-label').forEach((el) => {
+      el.addEventListener('mouseenter', () => {
+        dot.style.width = '16px';
+        dot.style.height = '16px';
+        ring.style.width = '52px';
+        ring.style.height = '52px';
+      });
+      el.addEventListener('mouseleave', () => {
+        dot.style.width = '8px';
+        dot.style.height = '8px';
+        ring.style.width = '36px';
+        ring.style.height = '36px';
+      });
+    });
+
+    window.addEventListener('load', () => setTimeout(() => document.getElementById('loader').classList.add('hidden'), 400));
+
+    const backBtn = document.getElementById('back-top');
+    window.addEventListener('scroll', () => backBtn.classList.toggle('show', window.scrollY > 400), { passive: true });
+    backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.style.background = window.scrollY > 20 ? 'rgba(255,255,255,.95)' : 'rgba(255,255,255,.85)';
+    }, { passive: true });
+
+    const industrySelect = document.getElementById('industrySelect');
+    const otherWrapper = document.getElementById('otherIndustryWrapper');
+    const otherInput = document.getElementById('industryOther');
+    const logoInput = document.getElementById('logoInput');
+    const logoFileName = document.getElementById('logoFileName');
+    const form = document.getElementById('maquetteForm');
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('emailError');
+    const successMsg = document.getElementById('successMessage');
+    const errorMsg = document.getElementById('errorMessage');
+    const errorMsgText = document.getElementById('errorMessageText');
+    const submitBtn = document.getElementById('submitBtn');
+    const defaultSubmitHtml = submitBtn.innerHTML;
+    const maxFileBytes = 5 * 1024 * 1024;
+    const allowedFileTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'image/gif'];
+    const fieldMap = {
+      company_name: document.getElementById('company_name'),
+      activity_desc: document.getElementById('activity_desc'),
+      project_desc: document.getElementById('project_desc'),
+      contact_name: document.getElementById('contact_name'),
+      email: emailInput,
+      industry_other: otherInput
+    };
+
+    function getApiUrl() {
+      const base = (form.dataset.apiBase || '').trim().replace(/\/+$/, '');
+      if (base) return base + '/api/maquette';
+      return form.getAttribute('action') || '/api/maquette';
+    }
+
+    function toggleOther() {
+      if (industrySelect.value === 'Autre') {
+        otherWrapper.style.display = 'block';
+        otherInput.setAttribute('required', 'required');
+      } else {
+        otherWrapper.style.display = 'none';
+        otherInput.removeAttribute('required');
+        otherInput.value = '';
+        otherInput.classList.remove('field-invalid');
+      }
+    }
+
+    function resetFieldErrors() {
+      Object.values(fieldMap).forEach((field) => {
+        if (field) field.classList.remove('field-invalid');
+      });
+      emailError.style.display = 'none';
+    }
+
+    function showError(message) {
+      errorMsgText.textContent = message;
+      errorMsg.style.display = 'flex';
+    }
+
+    function hideMessages() {
+      errorMsg.style.display = 'none';
+      successMsg.style.display = 'none';
+    }
+
+    function isValidEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+
+    function validateBeforeSubmit() {
+      resetFieldErrors();
+      hideMessages();
+
+      const requiredIds = ['company_name', 'activity_desc', 'project_desc', 'contact_name', 'email'];
+      let isValid = true;
+
+      requiredIds.forEach((id) => {
+        const field = document.getElementById(id);
+        if (!field.value.trim()) {
+          field.classList.add('field-invalid');
+          isValid = false;
+        }
+      });
+
+      if (industrySelect.value === 'Autre' && !otherInput.value.trim()) {
+        otherInput.classList.add('field-invalid');
+        isValid = false;
+      }
+
+      if (!isValidEmail(emailInput.value.trim())) {
+        emailInput.classList.add('field-invalid');
+        emailError.style.display = 'block';
+        isValid = false;
+      }
+
+      if (logoInput.files && logoInput.files[0]) {
+        const file = logoInput.files[0];
+        if (!allowedFileTypes.includes(file.type)) {
+          showError('Le logo doit être une image JPEG, PNG, WebP, SVG ou GIF.');
+          logoInput.value = '';
+          logoFileName.textContent = 'Aucun fichier';
+          return false;
+        }
+        if (file.size > maxFileBytes) {
+          showError('Le logo dépasse la taille maximale autorisée de 5 Mo.');
+          return false;
+        }
+      }
+
+      if (!isValid) {
+        showError('Merci de compléter correctement les champs obligatoires.');
+      }
+
+      return isValid;
+    }
+
+    function applyBackendValidation(errors) {
+      if (!Array.isArray(errors) || !errors.length) return;
+
+      errors.forEach((item) => {
+        const field = fieldMap[item.path];
+        if (field) {
+          field.classList.add('field-invalid');
+        }
+      });
+
+      const emailIssue = errors.find((item) => item.path === 'email');
+      if (emailIssue) {
+        emailError.textContent = emailIssue.msg || 'Email invalide';
+        emailError.style.display = 'block';
+      }
+
+      const firstMessage = errors[0] && errors[0].msg ? errors[0].msg : 'Merci de vérifier les informations saisies.';
+      showError(firstMessage);
+    }
+
+    function setSubmitting(isSubmitting) {
+      submitBtn.disabled = isSubmitting;
+      submitBtn.innerHTML = isSubmitting
+        ? '<i class="fa-regular fa-spinner fa-spin"></i> Envoi...'
+        : defaultSubmitHtml;
+    }
+
+    industrySelect.addEventListener('change', toggleOther);
+    toggleOther();
+
+    logoInput.addEventListener('change', function() {
+      logoFileName.textContent = this.files && this.files.length ? this.files[0].name : 'Aucun fichier';
+      hideMessages();
+    });
+
+    form.addEventListener('input', () => {
+      hideMessages();
+      resetFieldErrors();
+    });
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      if (!validateBeforeSubmit()) return;
+
+      setSubmitting(true);
+
+      try {
+        const response = await fetch(getApiUrl(), {
+          method: 'POST',
+          body: new FormData(form)
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          if (response.status === 422 && data.errors) {
+            applyBackendValidation(data.errors);
+          } else {
+            showError(data.message || 'Impossible d\'envoyer la demande pour le moment.');
+          }
+          return;
+        }
+
+        form.reset();
+        industrySelect.selectedIndex = 0;
+        toggleOther();
+        logoFileName.textContent = 'Aucun fichier';
+        successMsg.style.display = 'flex';
+        window.scrollTo({ top: document.getElementById('formulaire').offsetTop - 90, behavior: 'smooth' });
+      } catch (error) {
+        showError('Connexion impossible au backend. Vérifiez l\'URL API et les règles CORS.');
+      } finally {
+        setSubmitting(false);
+      }
+    });
+  })();
+</script>
+</body>
+</html>
