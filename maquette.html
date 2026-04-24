@@ -34,11 +34,120 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
-    body { font-family: var(--font-body); background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; position: relative; }
+    body { font-family: var(--font-body); background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; position: relative; isolation: isolate; }
     ::selection { background: var(--teal); color: white; }
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--bg-tertiary); }
     ::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 4px; }
+    .geo-grid {
+      position: absolute;
+      inset: -18%;
+      background-image: linear-gradient(rgba(15,23,42,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,.06) 1px, transparent 1px);
+      background-size: clamp(110px, 10vw, 160px) clamp(110px, 10vw, 160px);
+      opacity: 0.55;
+      -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,.72) 0%, transparent 74%);
+      mask-image: radial-gradient(circle at center, rgba(0,0,0,.72) 0%, transparent 74%);
+    }
+    .geo-shape {
+      position: absolute;
+      border: 1px solid rgba(15, 23, 42, 0.16);
+      background: linear-gradient(135deg, rgba(15,23,42,.08), rgba(15,118,110,.08));
+      box-shadow: 0 18px 36px rgba(15,23,42,.06);
+      will-change: transform, opacity;
+    }
+    .geo-shape::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      border-radius: inherit;
+      opacity: 0.75;
+    }
+    .geo-shape.outline {
+      background: transparent;
+      box-shadow: none;
+    }
+    .geo-shape.outline::before { inset: 16px; }
+    .geo-square {
+      width: 138px;
+      height: 138px;
+      top: 12%;
+      left: 6%;
+      border-radius: 24px;
+      transform: rotate(16deg);
+      opacity: 0.55;
+      animation: geoFloatA 26s infinite alternate ease-in-out;
+    }
+    .geo-pill {
+      width: 220px;
+      height: 64px;
+      top: 20%;
+      right: 16%;
+      border-radius: 999px;
+      opacity: 0.38;
+      animation: geoFloatB 24s infinite alternate ease-in-out;
+    }
+    .geo-diamond {
+      width: 92px;
+      height: 92px;
+      top: 64%;
+      left: 12%;
+      border-radius: 26px;
+      transform: rotate(45deg);
+      opacity: 0.5;
+      animation: geoSpinSoft 32s infinite linear;
+    }
+    .geo-circle {
+      width: 174px;
+      height: 174px;
+      top: 56%;
+      right: 8%;
+      border-radius: 50%;
+      opacity: 0.34;
+      animation: geoFloatC 30s infinite alternate ease-in-out;
+    }
+    .geo-frame {
+      width: 260px;
+      height: 260px;
+      bottom: 12%;
+      right: 20%;
+      border-radius: 40px;
+      opacity: 0.25;
+      animation: geoFloatD 28s infinite alternate ease-in-out;
+    }
+    .geo-line {
+      position: absolute;
+      width: 240px;
+      height: 1px;
+      top: 76%;
+      left: 38%;
+      background: linear-gradient(90deg, transparent, rgba(15,23,42,.34), transparent);
+      opacity: 0.62;
+      animation: geoSweep 20s infinite ease-in-out;
+    }
+    .geo-orbit {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      top: 28%;
+      left: 48%;
+      border-radius: 50%;
+      border: 1px dashed rgba(15, 23, 42, 0.14);
+      opacity: 0.32;
+      animation: geoRotateSlow 40s infinite linear;
+    }
+    .geo-orbit::before {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      top: 22px;
+      left: 50%;
+      border-radius: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.22);
+      box-shadow: 0 0 0 6px rgba(15, 23, 42, 0.07);
+    }
     .bg-animation {
       position: fixed;
       top: 0;
@@ -138,6 +247,35 @@
     @keyframes gradientShift {
       0% { opacity: 0.5; }
       100% { opacity: 1; }
+    }
+    @keyframes geoFloatA {
+      0% { transform: translate3d(0, 0, 0) rotate(16deg); }
+      100% { transform: translate3d(38px, -26px, 0) rotate(28deg); }
+    }
+    @keyframes geoFloatB {
+      0% { transform: translate3d(0, 0, 0) rotate(-8deg); }
+      100% { transform: translate3d(-44px, 26px, 0) rotate(4deg); }
+    }
+    @keyframes geoFloatC {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(-34px, 34px, 0) scale(1.08); }
+    }
+    @keyframes geoFloatD {
+      0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+      100% { transform: translate3d(28px, -24px, 0) rotate(10deg); }
+    }
+    @keyframes geoSpinSoft {
+      0% { transform: rotate(45deg) scale(1); }
+      50% { transform: rotate(225deg) scale(1.05); }
+      100% { transform: rotate(405deg) scale(1); }
+    }
+    @keyframes geoSweep {
+      0%, 100% { transform: translateX(-16px); opacity: 0.16; }
+      50% { transform: translateX(40px); opacity: 0.55; }
+    }
+    @keyframes geoRotateSlow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
     body::after { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.015'/%3E%3C/svg%3E"); pointer-events: none; z-index: -1; opacity: 0.3; }
     .cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; transform: translate(-50%, -50%); }
@@ -255,8 +393,162 @@
     .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: .75rem; color: var(--text-muted); flex-wrap: wrap; gap: 10px; }
     .footer-bottom a { color: var(--teal); font-weight: 500; text-decoration: none; }
     #otherIndustryWrapper { margin-top: 16px; display: none; }
-    #back-top.show { opacity: 1; transform: translateY(0); }
     .field-invalid { border-color: var(--danger) !important; box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.08) !important; background: #FFF5F5; }
+    .floating-maquette-cta {
+      position: fixed;
+      right: 28px;
+      bottom: 28px;
+      z-index: 1001;
+    }
+    .floating-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 18px;
+      background: linear-gradient(135deg, var(--teal), #0F766E);
+      color: white;
+      font-family: var(--font-display);
+      font-size: .82rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 18px 35px rgba(15, 118, 110, 0.22);
+      transition: transform .3s var(--ease), box-shadow .3s var(--ease), opacity .3s var(--ease);
+    }
+    .floating-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 22px 40px rgba(15, 118, 110, 0.28);
+    }
+    .floating-cta-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,.18);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .floating-cta.is-highlighted {
+      animation: floatingNudge 1.1s ease-in-out 2;
+    }
+    @keyframes floatingNudge {
+      0%, 100% { transform: translateY(0) scale(1); }
+      35% { transform: translateY(-6px) scale(1.03); }
+      70% { transform: translateY(0) scale(1); }
+    }
+    .modal-open { overflow: hidden; }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(15, 23, 42, 0.42);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .28s ease, visibility .28s ease;
+      z-index: 1100;
+    }
+    .modal-overlay.is-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    .modal-card {
+      width: min(100%, 560px);
+      background: rgba(255,255,255,.97);
+      border: 1px solid rgba(0, 180, 170, 0.16);
+      border-radius: 22px;
+      padding: 30px;
+      box-shadow: 0 30px 60px rgba(15, 23, 42, 0.16);
+      transform: translateY(18px) scale(.98);
+      opacity: 0;
+      display: none;
+      transition: transform .28s var(--ease), opacity .28s var(--ease);
+    }
+    .modal-overlay.is-open .modal-card.is-active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .modal-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      color: var(--teal);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.55rem, 4vw, 2.1rem);
+      line-height: 1.08;
+      letter-spacing: -.03em;
+      margin-bottom: 14px;
+      color: var(--text-primary);
+    }
+    .modal-copy {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+    .modal-note {
+      margin-top: 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: var(--teal-dim);
+      border: 1px solid var(--border-teal-light);
+      color: var(--text-secondary);
+      font-size: .88rem;
+    }
+    .modal-note i {
+      color: var(--teal);
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+    .modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .modal-actions .btn {
+      justify-content: center;
+    }
+    #back-top {
+      position: fixed;
+      right: 28px;
+      bottom: 106px;
+      width: 44px;
+      height: 44px;
+      background: var(--teal);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: all .35s var(--ease);
+      z-index: 999;
+      border: none;
+      box-shadow: 0 4px 15px rgba(0,180,170,.3);
+    }
+    #back-top.show { opacity: 1; transform: translateY(0); }
+    #back-top:hover { transform: translateY(-2px); }
     @media (max-width: 768px) {
       .nav-links, .nav-right .btn { display: none; }
       .intro-grid { flex-direction: column; }
@@ -266,11 +558,37 @@
       .form-grid { grid-template-columns: 1fr; gap: 20px; }
       .full-width { grid-column: span 1; }
       .file-name { max-width: 130px; }
+      .floating-maquette-cta { right: 18px; bottom: 18px; }
+      .floating-cta { padding: 12px 14px; }
+      .floating-cta-text { display: none; }
+      .floating-cta-icon { width: 42px; height: 42px; }
+      .modal-overlay { padding: 16px; }
+      .modal-card { padding: 24px 20px; border-radius: 18px; }
+      .modal-actions { flex-direction: column; }
+      .modal-actions .btn { width: 100%; }
+      #back-top { right: 18px; bottom: 84px; }
+      .geo-line, .geo-orbit, .geo-frame { display: none; }
+      .geo-grid { opacity: 0.28; }
+      .geo-square { width: 92px; height: 92px; left: -10px; top: 14%; }
+      .geo-pill { width: 150px; height: 48px; right: -14px; top: 18%; }
+      .geo-circle { width: 124px; height: 124px; right: -22px; top: 62%; }
+      .geo-diamond { width: 70px; height: 70px; left: 8%; top: 72%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .geo-shape, .geo-line, .geo-orbit { animation: none !important; }
     }
   </style>
 </head>
 <body>
 <div class="bg-animation">
+  <div class="geo-grid" aria-hidden="true"></div>
+  <div class="geo-shape geo-square" aria-hidden="true"></div>
+  <div class="geo-shape geo-pill" aria-hidden="true"></div>
+  <div class="geo-shape geo-diamond" aria-hidden="true"></div>
+  <div class="geo-shape geo-circle" aria-hidden="true"></div>
+  <div class="geo-shape geo-frame outline" aria-hidden="true"></div>
+  <div class="geo-line" aria-hidden="true"></div>
+  <div class="geo-orbit" aria-hidden="true"></div>
   <div class="bg-shape shape1"></div>
   <div class="bg-shape shape2"></div>
   <div class="bg-shape shape3"></div>
@@ -293,18 +611,18 @@
       Digistart<em>Express</em>
     </a>
     <nav class="nav-links">
-      <a href="#">Accueil</a>
-      <a href="#" class="active">Maquette</a>
-      <a href="#">Services</a>
-      <a href="#">Portfolio</a>
+      <a href="#debut">Accueil</a>
+      <a href="#formulaire" class="active">Maquette</a>
+      <a href="#temoignages">temoignages</a>
+      <a href="#realisationsSection">Portfolio</a>
     </nav>
     <div class="nav-right">
-      <a href="#" class="btn btn-teal">Contact</a>
+      <a href="https://wa.me/243988700603" class="btn btn-teal">Contact</a>
     </div>
   </div>
 </header>
 
-<section class="intro-section">
+<section class="intro-section" id="debut">
   <div class="container">
     <div class="intro-grid">
       <div class="intro-content">
@@ -312,33 +630,41 @@
         <h2 class="h2" style="margin-bottom: 20px;">Chaque jour sans une présence digitale claire, <span class="teal">vous laissez vos concurrents prendre vos clients.</span></h2>
         <p class="pain-point"><i class="fa-regular fa-circle-exclamation" style="color: var(--teal); margin-right: 8px;"></i> Vous savez que votre entreprise mérite mieux qu'un site brouillon ou une page Facebook vide. Mais entre la technique et le temps, vous repoussez.</p>
         <div class="time-badge"><i class="fa-regular fa-clock"></i> 2 minutes suffisent pour faire le premier pas</div>
-        <p class="lead">Remplissez ce formulaire simple — même sans jargon digital. Vous recevrez une maquette visuelle gratuite de votre futur site, adaptée à votre activité.</p>
+        <p class="lead">Remplissez ce formulaire simple — même sans jargon digital. Vous recevrez une maquette visuelle gratuite de votre futur site, application mobile ou n'importe quelle autre solution digitale, adaptée à votre activité.</p>
         <div style="margin-top: 30px;">
-          <a href="#formulaire" class="btn btn-teal btn-lg btn-attention">Je veux ma maquette gratuite <i class="fa-regular fa-arrow-down"></i></a>
+          <a href="#formulaire" class="btn btn-teal btn-lg btn-attention" id="primaryMaquetteCta" data-scroll-form>Je veux ma maquette gratuite <i class="fa-regular fa-arrow-down"></i></a>
         </div>
       </div>
       <div class="intro-image">
-        <img src="https://images.pexels.com/photos/3184299/pexels-photo-3184299.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Croissance digitale">
+        <img src="./BossBureau.jpg" alt="Croissance digitale">
         <p style="font-size:.7rem; color: var(--text-muted); margin-top: 8px;">De l'idée à la visibilité : votre projet mérite d'exister en ligne.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="testimonials-section">
+<section class="testimonials-section" id="temoignages">
   <div class="container">
     <div class="tag" style="margin-bottom: 16px;"><i class="fa-regular fa-star"></i> Ils ont osé le digital</div>
     <h2 class="h2" style="margin-bottom: 8px;">Des résultats <span class="teal">qui parlent d'eux-mêmes</span></h2>
     <p class="lead">Découvrez comment nos clients ont transformé leur présence en ligne en levier de croissance.</p>
     <div class="testimonials-grid">
+       <div class="testi-card"><div class="testi-quote">Nous avons multiplié notre chiffre d’affaires en ligne par 3 en 90 jours grâce à leur plateforme e-commerce. L’expérience utilisateur a complètement changé notre manière de vendre.</div><div class="testi-author"><div class="testi-avatar">AL</div><div><div class="testi-name">Alima Fashion</div><div class="testi-role">E-commerce · Kinshasa</div><div class="testi-result"><i class="fa-regular fa-clock"></i> +3x CA en 90j</div></div></div></div>
       <div class="testi-card"><div class="testi-quote">Grâce au nouveau site vitrine, nous avons signé trois contrats majeurs en moins de deux mois. L'équipe a compris nos enjeux et livré une plateforme qui inspire confiance.</div><div class="testi-author"><div class="testi-avatar">EM</div><div><div class="testi-name">Espérence Mining</div><div class="testi-role">Direction · Lubumbashi</div><div class="testi-result"><i class="fa-regular fa-arrow-trend-up"></i> +3 contrats en 60j</div></div></div></div>
       <div class="testi-card"><div class="testi-quote">Notre demande de devis a doublé après la refonte. L'approche orientée conversion a fait toute la différence. Je recommande sans hésiter.</div><div class="testi-author"><div class="testi-avatar">SK</div><div><div class="testi-name">Sophie Konaté</div><div class="testi-role">CEO · Abidjan</div><div class="testi-result"><i class="fa-regular fa-arrow-trend-up"></i> +2x demandes</div></div></div></div>
-      <div class="testi-card"><div class="testi-quote">Nous avons réduit notre temps administratif de 20h par semaine grâce au portail client sur mesure. Un vrai partenariat stratégique.</div><div class="testi-author"><div class="testi-avatar">MT</div><div><div class="testi-name">Mwendo Groupe</div><div class="testi-role">Logistique · Kinshasa</div><div class="testi-result"><i class="fa-regular fa-clock"></i> -20h/sem</div></div></div></div>
+      <div class="testi-card"><div class="testi-quote">Nous avons réduit notre temps administratif de 20h par semaine grâce au portail client sur mesure. Un vrai partenariat stratégique.</div><div class="testi-author"><div class="testi-avatar">MT</div><div><div class="testi-name">Mwendo Groupe</div><div class="testi-role">Mines · Kantanga</div><div class="testi-result"><i class="fa-regular fa-clock"></i> -20h/sem</div></div></div></div>
+      <div class="testi-card"><div class="testi-quote">Avant, nous perdions beaucoup de prospects. Aujourd’hui, notre site convertit en continu et nous génère des clients qualifiés chaque semaine.</div><div class="testi-author"><div class="testi-avatar">JN</div><div><div class="testi-name">Jean Ngoy</div><div class="testi-role">Services · Lubumbashi</div><div class="testi-result"><i class="fa-regular fa-clock"></i> clients hebdo</div></div></div></div>
+      <div class="testi-card"><div class="testi-quote">L’application mobile développée nous a permis d’augmenter l’engagement client et de fidéliser sur le long terme. Nos utilisateurs sont beaucoup plus actifs.</div><div class="testi-author"><div class="testi-avatar">BK</div><div><div class="testi-name">Bikala Services</div><div class="testi-role">Startup · Abidjan</div><div class="testi-result"><i class="fa-regular fa-clock"></i> engagement client</div></div></div></div>
+      <div class="testi-card"><div class="testi-quote">Grâce à l’automatisation mise en place, nous avons réduit les erreurs humaines et accéléré notre croissance sans recruter immédiatement.</div><div class="testi-author"><div class="testi-avatar">FD</div><div><div class="testi-name">Fina Distribution</div><div class="testi-role">Commerce · Lubumbashi</div><div class="testi-result"><i class="fa-regular fa-clock"></i> efficacité opérationnelle</div></div></div></div>
+      <div class="testi-card"><div class="testi-quote">Le système CRM développé nous a permis de mieux suivre nos prospects et d’augmenter significativement notre taux de conversion.</div><div class="testi-author"><div class="testi-avatar">CM</div><div><div class="testi-name">Congo Motors</div><div class="testi-role">Automobile · Lubumbashi</div><div class="testi-result"><i class="fa-regular fa-clock"></i> taux de conversion</div></div></div></div>
+      <div class="testi-card"><div class="testi-quote">Nous sommes passés d’une gestion chaotique à une organisation claire et structurée. Aujourd’hui, toutes nos opérations sont centralisées et optimisées.</div><div class="testi-author"><div class="testi-avatar">PT</div><div><div class="testi-name">Prime Tech</div><div class="testi-role">IT · Dakar</div><div class="testi-result"><i class="fa-regular fa-clock"></i> structuration interne</div></div></div></div>
+     
+
     </div>
   </div>
 </section>
 
-<section class="realisations-section">
+<section class="realisations-section" id="realisationsSection">
   <div class="container">
     <div class="tag" style="margin-bottom: 16px;"><i class="fa-regular fa-images"></i> Projets récents</div>
     <h3 class="h3">Quelques-unes de <span class="teal">nos réalisations</span></h3>
@@ -347,12 +673,23 @@
       <div class="gallery-item"><img src="https://res.cloudinary.com/dlkow85gp/image/upload/v1768300188/SiteIt_hiqloj.png" alt="IT"><div class="gallery-caption"><h4>IT & Digital</h4><p>Site vitrine haute conversion</p></div></div>
       <div class="gallery-item"><img src="https://res.cloudinary.com/dlkow85gp/image/upload/v1768300187/SiteMines_a11bs6.png" alt="Mines"><div class="gallery-caption"><h4>Mines & Industrie</h4><p>Portail institutionnel premium</p></div></div>
       <div class="gallery-item"><img src="https://res.cloudinary.com/dlkow85gp/image/upload/v1768300186/SiteSolaire_v4ritz.png" alt="Solaire"><div class="gallery-caption"><h4>Énergie solaire</h4><p>Simulateur de devis intégré</p></div></div>
+      <div class="gallery-item"><img src="./AppwebBoutiqueenigne/1.jpg" alt="BoutiqueEnligne"><div class="gallery-caption"><h4>Boutique En ligne</h4><p>Vente des produits</p></div></div>
+      <div class="gallery-item"><img src="./Dashboard/1.jpg" alt="Dashbord"><div class="gallery-caption"><h4>Tableau de bord</h4><p>Surveillance en temps réel</p></div></div>
+      <div class="gallery-item"><img src="./Ecologie/1.jpg" alt="Ecologie"><div class="gallery-caption"><h4>Écologie</h4><p>Site d'entreprise écologique et énergie verte</p></div></div>
+      <div class="gallery-item"><img src="./immobilier/1.jpg" alt="Immobilier"><div class="gallery-caption"><h4>Immobilier</h4><p>Site d'entreprise du secteur immobilier</p></div></div>
+      <div class="gallery-item"><img src="./LandingpageSAAS/1.jpg" alt="LandingPageSAAS"><div class="gallery-caption"><h4>Landing page</h4><p>Landing Page pour SAAS</p></div></div>
+      <div class="gallery-item"><img src="./RH/1.jpg" alt="RH"><div class="gallery-caption"><h4>Recrutement et Ressources Humaines</h4><p>Portail de recrutement automatisé par IA</p></div></div>
+      <div class="gallery-item"><img src="./Sitewebminier/1.jpg" alt="Mining"><div class="gallery-caption"><h4>Site minier</h4><p>Site web premium pour minier</p></div></div>
+      <div class="gallery-item"><img src="./Startuptech/1.jpg" alt="Startup"><div class="gallery-caption"><h4>Site pour startup</h4><p>Site pour startup tech</p></div></div>
+      <div class="gallery-item"><img src="./mobilebank.jpg" alt="bank"><div class="gallery-caption"><h4>App mobile pour bank</h4><p>Bank mobile</p></div></div>
+      <div class="gallery-item"><img src="./mobilereserv.jpg" alt="reservation"><div class="gallery-caption"><h4>App mobile de reservation</h4><p>Pour Hotel,Voyage,Restaurant etc..</p></div></div>
+      <div class="gallery-item"><img src="./mobilevente.jpg" alt="vente"><div class="gallery-caption"><h4>App mobile de vente</h4><p>Pour e-commerce, vente en ligne etc..</p></div></div>
     </div>
     <p class="field-hint" style="margin-top: 16px; justify-content: center;"><i class="fa-regular fa-eye"></i> Votre maquette sera 100% personnalisée.</p>
   </div>
 </section>
 
-<section id="formulaire">
+<section id="formulaire" >
   <div class="container">
     <div class="form-card">
       <div class="success-message" id="successMessage"><i class="fa-regular fa-circle-check"></i><div><strong>Demande envoyée !</strong><br>Votre demande a bien été enregistrée. Réponse sous 48h.</div></div>
@@ -365,17 +702,17 @@
       </div>
       <form id="maquetteForm" method="POST" enctype="multipart/form-data" action="http://localhost:3000/api/maquette" data-api-base="https://digistartmaquetteback.onrender.com">
         <div class="form-grid">
-          <div><label class="field-label"><i class="fa-regular fa-building"></i> Nom de l'entreprise *</label><input type="text" name="company_name" id="company_name" placeholder="Ex: Boulangerie du Marché" required><div class="field-hint"><i class="fa-regular fa-info-circle"></i> Nom officiel ou connu de vos clients.</div></div>
+          <div><label class="field-label"><i class="fa-regular fa-building"></i> Nom de l'entreprise *</label><input type="text" name="company_name" id="company_name" placeholder="Ex: Kantanga Mining" required><div class="field-hint"><i class="fa-regular fa-info-circle"></i> Nom officiel ou connu de vos clients.</div></div>
           <div><label class="field-label"><i class="fa-regular fa-tag"></i> Secteur (option)</label><select name="industry" id="industrySelect"><option value="" disabled selected>– Choisissez –</option><option>IT & Digital</option><option>Mines</option><option>Transport</option><option>Énergie</option><option>BTP</option><option>Finance</option><option>RH</option><option>Hôtellerie</option><option value="Autre">Autre (préciser)</option></select><div id="otherIndustryWrapper"><input type="text" name="industry_other" id="industryOther" placeholder="Précisez…" style="margin-top:8px;"></div></div>
           <div class="full-width"><label class="field-label"><i class="fa-regular fa-image"></i> Logo (option)</label><div class="file-upload-wrapper"><input type="file" name="logo" id="logoInput" accept="image/jpeg,image/png,image/webp,image/svg+xml,image/gif"><label for="logoInput" class="file-upload-label"><i class="fa-regular fa-cloud-upload"></i> Choisir</label><span class="file-name" id="logoFileName">Aucun fichier</span></div><div class="field-hint"><i class="fa-regular fa-info-circle"></i> Formats acceptés : JPEG, PNG, WebP, SVG, GIF. Taille max : 5 Mo.</div></div>
           <div class="full-width"><label class="field-label"><i class="fa-regular fa-message"></i> Que fait votre entreprise ? *</label><textarea name="activity_desc" id="activity_desc" rows="3" placeholder="Ex: Installation de panneaux solaires, cabinet d'avocats…" required></textarea></div>
         </div>
-        <div style="margin-top:32px;"><label class="field-label"><i class="fa-regular fa-file-lines"></i> Attentes pour votre futur site *</label><textarea name="project_desc" id="project_desc" rows="5" placeholder="Ex: Je veux que les clients voient mes réalisations et me contactent." required></textarea></div>
-        <div style="margin-top:36px;"><label class="field-label"><i class="fa-regular fa-list-check"></i> Services additionnels</label><div class="checkbox-group"><label class="checkbox-item"><input type="checkbox" name="extra_montage"> Montage vidéo</label><label class="checkbox-item"><input type="checkbox" name="extra_design"> Design</label><label class="checkbox-item"><input type="checkbox" name="extra_logo"> Logo</label><label class="checkbox-item"><input type="checkbox" name="extra_content"> Rédaction</label><label class="checkbox-item"><input type="checkbox" name="extra_seo"> SEO</label><label class="checkbox-item"><input type="checkbox" name="extra_marketing"> Marketing</label><label class="checkbox-item"><input type="checkbox" name="extra_other"> Autre</label></div><input type="text" name="other_needs" placeholder="Précisez…" style="margin-top:12px; max-width:400px;"></div>
-        <div class="form-grid" style="margin-top:32px;"><div><label class="field-label"><i class="fa-regular fa-coins"></i> Budget</label><select name="budget"><option value="">– À définir –</option><option>&lt;1 200 €</option><option>1 200–2 500 €</option><option>2 500–6 000 €</option><option>6 000–15 000 €</option><option>&gt;15 000 €</option></select></div><div><label class="field-label"><i class="fa-regular fa-calendar"></i> Délai</label><select name="deadline"><option value="">– Flexible –</option><option>Urgent</option><option>1 mois</option><option>2-3 mois</option><option>&gt;3 mois</option></select></div></div>
-        <div style="margin-top:36px;"><h3 style="font-family:var(--font-display); font-size:1.2rem; margin-bottom:20px;">Coordonnées</h3><div class="form-grid"><div><label class="field-label">Nom complet *</label><input name="contact_name" id="contact_name" required></div><div><label class="field-label">Email *</label><input type="email" name="email" id="email" required><div class="error-text" id="emailError">Email invalide</div></div><div><label class="field-label"><i class="fa-brands fa-whatsapp"></i> WhatsApp</label><input name="whatsapp" id="whatsapp"></div><div><label class="field-label">Téléphone</label><input name="phone"></div><div class="full-width"><label class="field-label">Source</label><select name="source"><option>Google</option><option>LinkedIn</option><option>Recommandation</option><option>Réseaux</option><option>Autre</option></select></div></div></div>
+        <div style="margin-top:32px;"><label class="field-label"><i class="fa-regular fa-file-lines"></i> Attentes pour votre futur site *</label><textarea name="project_desc" id="project_desc" rows="5" placeholder="Ex: Je veux que les clients voient mes réalisations et me contactent. Vous pouvez aussi spécifier les couleurs, la police d'écriture, la direction du design et autres" required></textarea></div>
+        <div style="margin-top:36px;"><label class="field-label"><i class="fa-regular fa-list-check"></i> Services additionnels</label><div class="checkbox-group"><label class="checkbox-item"><input type="checkbox" name="extra_montage"> Montage vidéo</label><label class="checkbox-item"><input type="checkbox" name="extra_design"> Design</label><label class="checkbox-item"><input type="checkbox" name="extra_logo"> Logo</label><label class="checkbox-item"><input type="checkbox" name="extra_content"> Rédaction</label><label class="checkbox-item"><input type="checkbox" name="extra_seo"> SEO</label><label class="checkbox-item"><input type="checkbox" name="extra_marketing"> Marketing</label><label class="checkbox-item"><input type="checkbox" name="ia-automation"> Automatisation IA</label><label class="checkbox-item"><input type="checkbox" name="extra_other"> Autre</label></div><input type="text" name="other_needs" placeholder="Précisez…" style="margin-top:12px; max-width:400px;"></div>
+        <div class="form-grid" style="margin-top:32px;"><div><label class="field-label"><i class="fa-regular fa-coins"></i> Budget</label><select name="budget"><option value="">– À définir –</option><option>&lt;1 200 $</option><option>1 200–2 500 $</option><option>2 500–6 000 $</option><option>6 000–15 000 $</option><option>&gt;15 000 $</option></select></div><div><label class="field-label"><i class="fa-regular fa-calendar"></i> Délai</label><select name="deadline"><option value="">– Flexible –</option><option>Urgent</option><option>1 mois</option><option>2-3 mois</option><option>&gt;3 mois</option></select></div></div>
+        <div style="margin-top:36px;"><h3 style="font-family:var(--font-display); font-size:1.2rem; margin-bottom:20px;">Coordonnées</h3><div class="form-grid"><div><label class="field-label">Nom complet *</label><input name="contact_name" id="contact_name" required></div><div><label class="field-label">Email *</label><input type="email" name="email" id="email" required><div class="error-text" id="emailError">Email invalide</div></div><div><label class="field-label"><i class="fa-brands fa-whatsapp"></i> WhatsApp Business</label><input name="whatsapp" id="whatsapp"></div><div><label class="field-label">Téléphone</label><input name="phone"></div><div class="full-width"><label class="field-label">Vous nous avez connu grâce à</label><select name="source"><option>LinkedIn</option><option>Instagram</option><option>Google</option><option>Facebook</option><option>Autre</option></select></div></div></div>
         <div class="form-actions"><button type="submit" class="btn btn-teal btn-lg btn-attention" id="submitBtn"><i class="fa-regular fa-paper-plane"></i> Recevoir ma maquette gratuite</button></div>
-        <p class="note-text"><i class="fa-regular fa-shield-check"></i> Données privées. Réponse sous 48h.</p>
+        <p class="note-text"><i class="fa-regular fa-shield-check"></i> Données privées. Réponse sous 48h maximum.</p>
       </form>
     </div>
   </div>
@@ -385,7 +722,44 @@
   <div class="container"><div class="footer-bottom"><span>© 2026 DigistartExpress</span><span><a href="mailto:contact@digistartexpress.com">contact@digistartexpress.com</a> · Kinshasa · Paris</span></div></div>
 </footer>
 
-<button id="back-top" style="position:fixed; bottom:28px; right:28px; width:44px; height:44px; background:var(--teal); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; transform:translateY(12px); transition:all .35s; z-index:999; border:none; box-shadow:0 4px 15px rgba(0,180,170,.3);"><i class="fa-solid fa-chevron-up"></i></button>
+<div class="floating-maquette-cta">
+  <button type="button" class="floating-cta" id="floatingMaquetteCta" data-scroll-form aria-label="Commander une maquette gratuite">
+    <span class="floating-cta-icon"><i class="fa-regular fa-wand-magic-sparkles"></i></span>
+    <span class="floating-cta-text">Commander ma maquette</span>
+  </button>
+</div>
+
+<div class="modal-overlay" id="maquetteModalOverlay" aria-hidden="true">
+  <div class="modal-card" id="maquettePromptModal" role="dialog" aria-modal="true" aria-labelledby="maquettePromptTitle">
+    <div class="modal-tag"><i class="fa-regular fa-bolt"></i> Avant de continuer</div>
+    <h3 class="modal-title" id="maquettePromptTitle">Vous voulez le même niveau de résultat que ces clients ?</h3>
+    <p class="modal-copy">Vous pouvez commander dès maintenant votre maquette gratuite et voir à quoi ressemblera votre future plateforme avant de vous lancer.</p>
+    <div class="modal-note">
+      <i class="fa-regular fa-gem"></i>
+      <span>Un brief simple, une maquette personnalisée et une réponse sous 48h.</span>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-teal" id="promptOrderBtn" data-scroll-form>Commander la maquette <i class="fa-regular fa-arrow-down"></i></button>
+      <button type="button" class="btn btn-outline" id="continueVisitBtn">Je continue à visiter le site</button>
+    </div>
+  </div>
+
+  <div class="modal-card" id="maquetteReminderModal" role="dialog" aria-modal="true" aria-labelledby="maquetteReminderTitle">
+    <div class="modal-tag"><i class="fa-regular fa-hand-point-down"></i> Petit rappel</div>
+    <h3 class="modal-title" id="maquetteReminderTitle">D'accord. Gardez juste l'icône fixe en bas à droite en tête.</h3>
+    <p class="modal-copy">À tout moment, vous pouvez cliquer dessus pour revenir directement au formulaire et commander votre maquette gratuite.</p>
+    <div class="modal-note">
+      <i class="fa-regular fa-circle-check"></i>
+      <span>Quand vous êtes prêt, un clic suffit pour revenir au formulaire sans chercher dans la page.</span>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-teal" id="reminderOrderBtn" data-scroll-form>Commander maintenant <i class="fa-regular fa-arrow-down"></i></button>
+      <button type="button" class="btn btn-outline" id="reminderDismissBtn">Je continue ma visite</button>
+    </div>
+  </div>
+</div>
+
+<button id="back-top" aria-label="Revenir en haut de la page"><i class="fa-solid fa-chevron-up"></i></button>
 
 <script>
   (function() {
@@ -429,13 +803,137 @@
     window.addEventListener('load', () => setTimeout(() => document.getElementById('loader').classList.add('hidden'), 400));
 
     const backBtn = document.getElementById('back-top');
+    const header = document.getElementById('header');
+    const formSection = document.getElementById('formulaire');
+    const primaryCta = document.getElementById('primaryMaquetteCta');
+    const realisationsSection = document.getElementById('realisationsSection');
+    const floatingCta = document.getElementById('floatingMaquetteCta');
+    const modalOverlay = document.getElementById('maquetteModalOverlay');
+    const promptModal = document.getElementById('maquettePromptModal');
+    const reminderModal = document.getElementById('maquetteReminderModal');
+    const continueVisitBtn = document.getElementById('continueVisitBtn');
+    const reminderDismissBtn = document.getElementById('reminderDismissBtn');
+    const formTriggers = document.querySelectorAll('[data-scroll-form]');
+
+    function readSessionFlag(key) {
+      try {
+        return window.sessionStorage.getItem(key) === '1';
+      } catch (error) {
+        return false;
+      }
+    }
+
+    function writeSessionFlag(key) {
+      try {
+        window.sessionStorage.setItem(key, '1');
+      } catch (error) {
+        // Ignore storage issues silently.
+      }
+    }
+
+    let hasFormIntent = readSessionFlag('maquette-form-intent');
+    let promptHandled = readSessionFlag('maquette-popup-seen');
+    let reminderHandled = readSessionFlag('maquette-reminder-seen');
+    let activeModalName = null;
+
+    function highlightFloatingCta() {
+      floatingCta.classList.remove('is-highlighted');
+      void floatingCta.offsetWidth;
+      floatingCta.classList.add('is-highlighted');
+      window.setTimeout(() => floatingCta.classList.remove('is-highlighted'), 2400);
+    }
+
+    function closeModals() {
+      modalOverlay.classList.remove('is-open');
+      modalOverlay.setAttribute('aria-hidden', 'true');
+      promptModal.classList.remove('is-active');
+      reminderModal.classList.remove('is-active');
+      document.body.classList.remove('modal-open');
+      activeModalName = null;
+    }
+
+    function openModal(name) {
+      activeModalName = name;
+      modalOverlay.classList.add('is-open');
+      modalOverlay.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      promptModal.classList.toggle('is-active', name === 'prompt');
+      reminderModal.classList.toggle('is-active', name === 'reminder');
+      if (name === 'reminder') highlightFloatingCta();
+    }
+
+    function getFormTop() {
+      const headerOffset = header ? header.offsetHeight + 18 : 90;
+      return Math.max(formSection.getBoundingClientRect().top + window.scrollY - headerOffset, 0);
+    }
+
+    function scrollToForm() {
+      window.scrollTo({ top: getFormTop(), behavior: 'smooth' });
+    }
+
+    function registerFormIntent() {
+      hasFormIntent = true;
+      promptHandled = true;
+      reminderHandled = true;
+      writeSessionFlag('maquette-form-intent');
+      writeSessionFlag('maquette-popup-seen');
+      writeSessionFlag('maquette-reminder-seen');
+    }
+
+    function hasReachedFormArea() {
+      return formSection.getBoundingClientRect().top <= window.innerHeight * 0.45;
+    }
+
+    function hasPassedPrimaryCta() {
+      return primaryCta.getBoundingClientRect().bottom < 0 || window.scrollY > primaryCta.offsetTop + primaryCta.offsetHeight;
+    }
+
     window.addEventListener('scroll', () => backBtn.classList.toggle('show', window.scrollY > 400), { passive: true });
     backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-    const header = document.getElementById('header');
     window.addEventListener('scroll', () => {
       header.style.background = window.scrollY > 20 ? 'rgba(255,255,255,.95)' : 'rgba(255,255,255,.85)';
     }, { passive: true });
+
+    formTriggers.forEach((trigger) => {
+      trigger.addEventListener('click', (event) => {
+        event.preventDefault();
+        registerFormIntent();
+        closeModals();
+        scrollToForm();
+      });
+    });
+
+    continueVisitBtn.addEventListener('click', () => {
+      promptHandled = true;
+      reminderHandled = true;
+      writeSessionFlag('maquette-popup-seen');
+      writeSessionFlag('maquette-reminder-seen');
+      openModal('reminder');
+    });
+
+    reminderDismissBtn.addEventListener('click', closeModals);
+
+    modalOverlay.addEventListener('click', (event) => {
+      if (event.target === modalOverlay) closeModals();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && activeModalName) closeModals();
+    });
+
+    if (realisationsSection) {
+      const realisationsObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          if (promptHandled || hasFormIntent || hasReachedFormArea() || !hasPassedPrimaryCta()) return;
+          promptHandled = true;
+          writeSessionFlag('maquette-popup-seen');
+          openModal('prompt');
+        });
+      }, { threshold: 0.35 });
+
+      realisationsObserver.observe(realisationsSection);
+    }
 
     const industrySelect = document.getElementById('industrySelect');
     const otherWrapper = document.getElementById('otherIndustryWrapper');
